@@ -142,3 +142,91 @@ describe('Shopping List', function() {
       });
   });
 });
+
+describe('Recipes', function(){
+  before(function() {
+      return runServer();
+    });
+
+  after(function() {
+    return closeServer();
+  });
+
+  it('should list recipes', function(){
+    return chai.request(app)
+      .get('/recipes')
+      .then(function(res){
+        res.should.have.status(200);
+        res.should.be.a('object');
+        res.should.be.json;
+
+        res.body.length.should.be.at.least(1);
+
+         // for `id`, `name` and `checked`.
+        const expectedKeys = ['id', 'name', 'ingredients'];
+        res.body.forEach(function(item) {
+          item.should.be.a('object');
+          item.should.include.keys(expectedKeys);
+        });
+      })
+  });
+
+  it('should add new recipe on POST', function(){
+    const newRecipe = {name: 'PBJ', ingredients: ['peanut butter', 'jelly', 'bread']};
+
+    return chai.request(app)
+      .post('/recipes')
+      .send(newRecipe)
+      .then(function(res){
+        res.should.have.status(201);
+        res.body.should.be.a('object');
+        res.body.should.include.keys('name', 'id', 'ingredients');
+        res.body.id.should.not.be.null;
+        res.should.be.json;
+
+        res.body.should.deep.equal(Object.assign(newRecipe, {id: res.body.id}));
+      });
+  });
+
+  it('should update recipe on PUT', function() {
+   
+    const updatedRecipe = {
+      name: 'Sample Recipe',
+      ingredients: ['ingredient1', 'ingredient2', 'ingredient3']
+    };
+
+    return chai.request(app)
+      .get('/recipes')
+      .then(function(res) {
+        updatedRecipe.id = res.body[0].id;
+      
+        return chai.request(app)
+          .put(`/recipes/${updatedRecipe.id}`)
+          .send(updatedRecipe);
+      })
+    
+      .then(function(res) {
+        res.should.have.status(200);
+        res.should.be.json;
+        res.body.should.be.a('object');
+        res.body.should.deep.equal(updatedRecipe);
+      });
+  });
+
+  it('should delete items on DELETE', function() {
+    return chai.request(app)
+      .get('/recipes')
+      .then(function(res) {
+        return chai.request(app)
+          .delete(`/recipes/${res.body[0].id}`);
+      })
+      .then(function(res) {
+        res.should.have.status(204);
+      });
+  });
+
+
+});
+
+// Why do both before and after appear before the tests????
+// What is "deep" equal?

@@ -81,3 +81,7 @@ if (require.main === module) {
 };
 
 module.exports = {app, runServer, closeServer};
+
+
+
+//Why are there 2 runServer functions???
