@@ -1,0 +1,12 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: z2M4hXaoKQiSuC5YQlbql0BMBmyYoaaq2zYsoivMv/flN1ixQiBDPVMpko1dqCzNdnxofiwhtP40VWDgdboT5IFrWqpQpRWUV8wG4ToOdu9ARB8Hg8UksE4dk1bGd9Ck4vJTpiRvPR2ImNn1hh2rzgUZFJppyu8KJcAcN0RbxCzPXET+XvlCpsYLMKGtp3DY6bbJq3Z5aOWILYndOZaRF9S1b8Rb5lh+bNIrtnE8QPddzokiU8QwjHoKn2bNFGHBaINjR5+yWZjQOR7F8R7jIbV/SRYFuZTnWjlgLWHJxN8KhBqcss4O3CbNZtz7kaObfo0uqzktv3ZjMjmQG0TjSoVkEEyXwhBxTIrOEqyohAggJnD7xgOa+P4UoGOGuPolRJE7xhcVG3Zb5tvGT4Ya0mqd30H4h3Pxj9/9kibjK/0f5sDFaFd0Yakybk2Ueh4nOAZQ1sh/zohjJUu4XTa7GZ6Q7zvbYC/bj0AVGaMCiLhEnNqHaaK4wRwUVk/LojkWDSKOdn0j4KrhF4O6cufaCfjqFPQuxifsiMlNlxUwhFlxItIwb0DQcZ4DY8E2YEYyayyHfxGRNdiSHwUgrE63iTxh0aebGFDb6846NEqBbLlgjXeD+3DAOM0L1Ju+Qre1N3B4gBb+kuhpzs8SALbjgXWW7G18WKNdZRahEb2EwIw=
+  app: https://polar-river-58092.herokuapp.com/
+  on:
+    repo: spokencode/node-restaurants-app-mongoose
+    branch: feature/with-tests
